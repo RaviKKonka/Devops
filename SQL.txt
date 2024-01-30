@@ -1,0 +1,452 @@
+
+"C:\Program Files\MySQL\MySQL Server 8.0\bin\mysqld.exe" 
+"C:\ProgramData\MySQL\MySQL Server 8.0\my.ini" MySQL80
+
+	jdbc:mysql://127.0.0.1:3306/?user=root
+
+	
+	SELECT Salary from employee group by Salary order by Salary desc limit 1,1; -- 	Second higest Salary and 2 persons have same highest salary
+	
+	SELECT * FROM customers; -- get all the customers info
+	SELECT * from customers where state IN('va','fl','ca'); -- to filter three states mentioned in brackets using IN
+	SELECT * from customers where state not IN('va','fl','ca'); -- to get data apart from three states mentioned in the brackets using IN
+	SELECT * from customers where points between 1000 and 3000; -- to get range of data using BETWEEN Operator
+	SELECT * from customers where birth_date between '1990-01-01' and '2000-01-01'; -- to get ranage of dates uring BETWEEN Operator 
+    SELECT * FROM customers where last_name like '_____y'; -- to get last name of 6 letters ends with y using like operator (because we   used 5 _ before y
+
+	SELECT * FROM customers where last_name like 'b____y'; -- to get last name starts with b and end with y using LIKE Operator(between b and y only 4 letters   we used 4_)
+	SELECT * FROM customers where address like '%trail%' or address like '%avenue%' ; -- to get address [trail or avenue] by using LIKE Operator
+	select *from customere where last_name like '%b%';....to get last name includes letter b, anywhere in the name using like operator
+	SELECT * FROM customers where phone like '%9'; -- to get phone number ends with 9 by using LIKE Operator
+	SELECT * FROM customers where phone like '9%'; -- to get phone number starts with 9 by using LIKE Operator
+	SELECT * FROM customers where phone not like '%9'; -- to get phone number does not ends with 9 using LIKE
+	SELECT * FROM customers where last_name regexp "field"; -- to get last name anywhere in the string by using REGEXP Operator
+	SELECT * FROM customers where last_name regexp "^field"; -- to get last name using ^field start of the string
+	SELECT * FROM customers where last_name regexp "field$"; -- to get last name using field$ end of the string
+	SELECT * FROM customers where last_name regexp "field|mac|ros"; -- to get last name with field or mac or rose by using the | operator 
+	SELECT * FROM customers where last_name regexp "[gil]e"; -- to get last name which has 'ge' or 'ie' or 'le' using regexp
+	SELECT * FROM customers where last_name regexp "e[gil]"; -- to get last name which has 'eg' or 'ei' or 'el' using regexp
+	SELECT * FROM customers where last_name regexp "e[a-p]"; -- to get last name which has 'e' with any range from a to p laters
+	SELECT * FROM orders where shipper_id is null; -- to get null records by using IS NULL operator
+	SELECT * FROM customers order by first_name; -- sort first name in asending order - by using ORDER BY operator
+	SELECT * FROM customers order by first_name desc; -- sort first name in desending order - by using ORDER BY & DESC operator
+	SELECT * FROM customers order by points desc limit 1; -- to get higest points by using ORDER BY and LIMIT operator
+	SELECT * FROM customers  limit 6,3; skips first 6 customers information and shows next 3
+	
+	
+	INNER Join
+	SELECT order_id,first_name,last_name 
+	FROM orders join customers on orders.customer_id = customers.customer_id; 
+	-- Inner Join example, get customer first name from customers table by using Join
+	
+	INNER Join - three tables
+	SELECT o.order_id,c.customer_id,o.order_date,first_name,last_name,name from orders o
+	join customers c on o.customer_id = c.customer_id
+	join order_statuses os on o.status = os.order_status_id order by order_id
+	
+	OUTTER LEFT Join
+	select p.product_id, name,quantity from products p
+	left join order_items oi
+		on p.product_id = oi.product_id
+		
+     USING CLAUSE
+	 select * 
+	 from customers c
+	 join orders o
+	 using(customer_id).........if column name is same in both tables
+	 
+	 CROSS JOIN
+	 select*
+	 from customers c
+	 cross join products p..........every record from first table is combined to every record from second table
+	 
+	 
+	 UNION
+	 
+	 using union we can combine results of multiple queries
+	 
+	
+	INSERT EXAMPLE
+	INSERT INTO Customers (customer_id, first_name,last_name,birth_date, phone, address, City, state, points)
+	VALUES (11, 'RAVI', 'KONKA','2000-01-01','0123456789','Skagen 21', 'Stavanger', 'CA', 5000);
+	
+	UPDATE EXAMPLE
+	UPDATE Customers SET first_name = 'HARI', City= 'Placentia' WHERE Customer_ID = 1;
+	
+	SELECT MAX(points) as largepoints from customers; -- to get	largest number/points from points column
+	SELECT MIN(points) as smallestpoints from customers; -- to get smallest number / points from points column
+	ELECT COUNT(Customer_ID) FROM customers; -- to get count
+	SELECT AVG(points) FROM customers; -- to get Average
+	SELECT SUM(points) FROM customers; -- to get SUM
+	SELECT COUNT(Customer_ID), state FROM Customers GROUP BY state; -- to do Group by sort
+	
+	ANY Operator
+	SELECT name FROM Products WHERE Product_ID = ANY
+	(SELECT Product_ID FROM order_items WHERE unit_price < 2);
+	
+	SELECT MAX(POINTS) FROM CUSTOMERS WHERE POINTS < (SELECT MAX(POINTS) FROM CUSTOMERS); -- to get second best points
+	
+	Primary Key vs 	Foreign Key
+	1. Primary key is used to uniquely identify a row
+	2. Foreign key is used to connect two tables or maintain relationship between them
+	3. A table can have only have one primary key	
+	4. A table can have multiple foreign keys
+	
+	
+	New
+	******
+	SQL stands for Structured Query Language
+	
+	Some of The Most Important SQL Commands
+	****************************************
+	SELECT - extracts data from a database
+	UPDATE - updates data in a database
+	DELETE - deletes data from a database
+	INSERT INTO - inserts new data into a database
+	CREATE DATABASE - creates a new database
+	ALTER DATABASE - modifies a database
+	CREATE TABLE - creates a new table
+	ALTER TABLE - modifies a table
+	DROP TABLE - deletes a table
+	CREATE INDEX - creates an index (search key)
+	DROP INDEX - deletes an index
+	
+	DISTINCT
+	*********
+	SELECT DISTINCT Country FROM Customers; // to Get unique country list
+	
+	WHERE
+	*******
+	SELECT * FROM Customers WHERE Country='Mexico';
+	SELECT * FROM Customers WHERE CustomerID=1;
+	SELECT * FROM Customers WHERE CustomerID > 80;
+	
+	ORDER BY
+	**********
+	The ORDER BY keyword is used to sort the result-set in ascending or descending order
+	SELECT * FROM Products ORDER BY Price;
+	SELECT * FROM Products ORDER BY Price DESC;
+	
+	The following SQL statement selects all customers from the "Customers" table, sorted ascending by the "Country" and descending by the "CustomerName" column:
+	
+	SELECT * FROM Customers ORDER BY Country ASC, CustomerName DESC;
+	
+	AND Operator
+	*************
+	The WHERE clause can contain one or many AND operators.
+
+	The AND operator is used to filter records based on more than one condition, like if you want to return all customers from Spain that starts with the letter 'G':
+	
+	SELECT * FROM Customers WHERE Country = 'Spain' AND CustomerName LIKE 'G%';
+	SELECT * FROM Customers WHERE Country = 'Germany' AND City = 'Berlin' AND PostalCode > '12000';
+	
+	OR Operator
+	**************
+	The WHERE clause can contain one or more OR operators.
+
+	The OR operator is used to filter records based on more than one condition, like if you want to return all customers from Germany but also those from Spain:
+	
+	SELECT * FROM Customers WHERE Country = 'Germany' OR Country = 'Spain';
+	
+	Combining AND and OR
+	
+	SELECT * FROM Customers WHERE Country = 'Spain' AND (CustomerName LIKE 'G%' OR CustomerName LIKE 'R%');
+	
+	NOT Operator
+	*************
+	SELECT * FROM Customers WHERE NOT Country = 'Spain';
+	
+	NOT LIKE
+	SELECT * FROM Customers WHERE CustomerName NOT LIKE 'A%';
+	
+	NOT BETWEEN
+	SELECT * FROM Customers WHERE CustomerID NOT BETWEEN 10 AND 60;
+	
+	NOT IN
+	SELECT * FROM Customers WHERE City NOT IN ('Paris', 'London');
+	
+	NOT Greater Than
+	SELECT * FROM Customers WHERE NOT CustomerID > 50;
+	
+	NOT Less Than
+	SELECT * FROM Customers WHERE NOT CustomerId < 50;
+	
+	INSERT INTO Statement
+	*********************
+	The INSERT INTO statement is used to insert new records in a table.
+	
+	INSERT INTO table_name (column1, column2, column3, ...)
+	VALUES (value1, value2, value3, ...);
+	
+	INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country)
+	VALUES ('Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway');
+	
+	Insert Data Only in Specified Columns
+	INSERT INTO Customers (CustomerName, City, Country) VALUES ('Cardinal', 'Stavanger', 'Norway');
+	
+	Insert Multiple Rows
+	INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country)
+	VALUES
+	('Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway'),
+	('Greasy Burger', 'Per Olsen', 'Gateveien 15', 'Sandnes', '4306', 'Norway'),
+	('Tasty Tee', 'Finn Egan', 'Streetroad 19B', 'Liverpool', 'L1 0AA', 'UK');
+	
+	NULL Values
+	**************
+	How to Test for NULL Values?
+	We will have to use the IS NULL and IS NOT NULL operators instead.
+	
+	SELECT CustomerName, ContactName, Address FROM Customers WHERE Address IS NULL;
+	SELECT CustomerName, ContactName, Address FROM Customers WHERE Address IS NOT NULL;
+	
+	UPDATE Statement
+	******************
+	The UPDATE statement is used to modify the existing records in a table.
+	
+	UPDATE Customers SET ContactName = 'Alfred Schmidt', City= 'Frankfurt' WHERE CustomerID = 1;
+	
+	UPDATE Multiple Records
+	UPDATE Customers SET ContactName='Juan' WHERE Country='Mexico';
+	
+	DELETE Statement
+	******************
+	DELETE FROM Customers WHERE CustomerName='Alfreds Futterkiste';
+	
+	Delete All Records
+	DELETE FROM Customers;
+	
+	Delete a Table
+	DROP TABLE Customers;
+	
+	SQL SELECT TOP Clause
+	********************
+	Select only the first 3 records of the Customers table:
+	SELECT TOP 3 * FROM Customers;
+	SELECT TOP 3 * FROM Customers WHERE Country='Germany';
+	SELECT TOP 3 * FROM Customers ORDER BY CustomerName DESC;
+	
+	MySQL 
+	*****
+	SELECT column_name(s) FROM table_name WHERE condition LIMIT number;
+	SELECT * FROM Customers LIMIT 3;
+	SELECT * FROM Customers WHERE Country='Germany' LIMIT 3;
+	SELECT * FROM Customers ORDER BY CustomerName DESC LIMIT 3;
+	
+	MIN() and MAX() Functions
+	****************************
+	SELECT MIN(column_name) FROM table_name WHERE condition;
+	SELECT MAX(column_name) FROM table_name WHERE condition;
+	SELECT MIN(Price) AS SmallestPrice FROM Products; // Set Column Name (Alias)
+	
+	COUNT() Function
+	******************
+	SELECT COUNT(column_name) FROM table_name WHERE condition;
+	SELECT COUNT(*) FROM Products;
+	SELECT COUNT(ProductID) FROM Products WHERE Price > 20;
+	SELECT COUNT(ProductName) FROM Products; // Specify Column
+	SELECT COUNT(DISTINCT Price) FROM Products; //Ignore Duplicates
+	SELECT COUNT(*) AS [number of records] FROM Products; // Use an Alias >> Name the column "number of records"
+	
+	SUM() Function
+	****************
+	SELECT SUM(column_name) FROM table_name WHERE condition;
+	SELECT SUM(Quantity) FROM OrderDetails;
+	SELECT SUM(Quantity) FROM OrderDetails WHERE ProductId = 11;
+	SELECT SUM(Quantity) AS total FROM OrderDetails; //Use an Alias
+	
+	SUM() With an Expression
+	SELECT SUM(Quantity * 10) FROM OrderDetails;
+	
+	AVG() Function
+	***************
+	SELECT AVG(column_name) FROM table_name WHERE condition;
+	SELECT AVG(Price) FROM Products WHERE CategoryID = 1;
+	SELECT AVG(Price) AS [average price] FROM Products;
+	SELECT * FROM Products WHERE price > (SELECT AVG(price) FROM Products); // Higher Than Average
+	
+	LIKE Operator
+	***************
+	SELECT column1, column2, ...
+	FROM table_name
+	WHERE columnN LIKE pattern;
+	
+	SELECT * FROM Customers WHERE CustomerName LIKE 'a%';
+	SELECT * FROM Customers WHERE city LIKE 'L_nd__'; // The _ Wildcard
+	SELECT * FROM Customers WHERE city LIKE '%L%'; // The % Wildcard > city that contains the letter 'L'
+	SELECT * FROM Customers WHERE CustomerName LIKE 'La%'; // Starts With
+	SELECT * FROM Customers WHERE CustomerName LIKE 'a%' OR CustomerName LIKE 'b%';
+	SELECT * FROM Customers WHERE CustomerName LIKE '%a'; // Ends With
+	SELECT * FROM Customers WHERE CustomerName LIKE 'b%s'; // starts with "b" and ends with "s"
+	SELECT * FROM Customers WHERE CustomerName LIKE '%or%'; // customers that contains the phrase 'or'
+	SELECT * FROM Customers WHERE CustomerName LIKE 'a__%'; //  starts with "a" and are at least 3 characters in length
+	SELECT * FROM Customers WHERE CustomerName LIKE '_r%'; // customers that have "r" in the second position
+	SELECT * FROM Customers WHERE Country LIKE 'Spain';
+	
+	SELECT * FROM Customers WHERE CustomerName LIKE '[bsp]%';
+	SELECT * FROM Customers WHERE CustomerName LIKE '[a-f]%';
+	SELECT * FROM Customers WHERE City LIKE 'L___on';
+	
+	IN Operator
+	***************
+	SELECT column_name(s)
+	FROM table_name
+	WHERE column_name IN (value1, value2, ...);
+	
+	SELECT * FROM Customers WHERE Country IN ('Germany', 'France', 'UK');
+	SELECT * FROM Customers WHERE Country NOT IN ('Germany', 'France', 'UK');
+	
+	IN (SELECT)
+	SELECT * FROM Customers WHERE CustomerID IN (SELECT CustomerID FROM Orders);
+	
+	NOT IN (SELECT)
+	SELECT * FROM Customers
+	WHERE CustomerID NOT IN (SELECT CustomerID FROM Orders);
+	
+	BETWEEN Operator
+	*****************
+	SELECT column_name(s)
+	FROM table_name
+	WHERE column_name BETWEEN value1 AND value2;
+	
+	SELECT * FROM Products WHERE Price BETWEEN 10 AND 20;
+	SELECT * FROM Products WHERE Price NOT BETWEEN 10 AND 20;
+	
+	BETWEEN with IN
+	SELECT * FROM Products WHERE Price BETWEEN 10 AND 20 AND CategoryID IN (1,2,3);
+	
+	SELECT * FROM Products WHERE ProductName BETWEEN 'Carnarvon Tigers' AND 'Mozzarella di Giovanni' ORDER BY ProductName;
+	SELECT * FROM Products WHERE ProductName NOT BETWEEN 'Carnarvon Tigers' AND 'Mozzarella di Giovanni' ORDER BY ProductName;
+	
+	SELECT * FROM Orders WHERE OrderDate BETWEEN '1996-07-01' AND '1996-07-31';
+	
+	SQL Aliases
+	*************
+	SELECT column_name AS alias_name FROM table_name;
+	SELECT column_name(s) FROM table_name AS alias_name;
+	
+	SELECT CustomerID AS ID FROM Customers;
+	SELECT * FROM Customers AS Persons;
+	
+	With Alias
+	SELECT o.OrderID, o.OrderDate, c.CustomerName FROM Customers AS c, Orders AS o WHERE c.CustomerName='Around the Horn' AND c.CustomerID=o.CustomerID;
+	
+	Without Alias
+	SELECT Orders.OrderID, Orders.OrderDate, Customers.CustomerName FROM Customers, Orders WHERE Customers.CustomerName='Around the Horn' AND Customers.CustomerID=Orders.CustomerID;
+	
+	SQL Joins
+	**********
+	A JOIN clause is used to combine rows from two or more tables, based on a related column between them.
+	
+	
+	Different Types of SQL JOINs
+	******************************
+	(INNER) JOIN: Returns records that have matching values in both tables
+	LEFT (OUTER) JOIN: Returns all records from the left table, and the matched records from the right table
+	RIGHT (OUTER) JOIN: Returns all records from the right table, and the matched records from the left table
+	FULL (OUTER) JOIN: Returns all records when there is a match in either left or right table
+	
+	INNER JOIN 
+	*************
+	SELECT Customers.CustomerID, Orders.OrderID, Orders.OrderDate FROM Orders
+	INNER JOIN 
+	Customers ON Customers.CustomerID = Orders.CustomerID
+	
+	SELECT ProductID, ProductName, CategoryName	FROM Products
+	INNER JOIN 
+	Categories ON Products.CategoryID = Categories.CategoryID;
+
+	JOIN or INNER JOIN
+	JOIN and INNER JOIN will return the same result.
+
+	INNER is the default join type for JOIN, so when you write JOIN the parser actually writes INNER JOIN.
+	
+	JOIN Three Tables
+	SELECT Orders.OrderID, Customers.CustomerName, Shippers.ShipperName
+	FROM ((Orders
+	INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID)
+	INNER JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID);
+	
+	LEFT JOIN Keyword
+	*******************
+	SELECT column_name(s)
+	FROM table1
+	LEFT JOIN table2
+	ON table1.column_name = table2.column_name;
+	
+	The LEFT JOIN keyword returns all records from the left table (Customers), even if there are no matches in the right table (Orders).
+	
+	SELECT Customers.CustomerName, Orders.OrderID
+	FROM Customers
+	LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+	ORDER BY Customers.CustomerName;
+	
+	RIGHT JOIN Keyword
+	*******************
+	The RIGHT JOIN keyword returns all records from the right table (table2), and the matching records from the left table (table1). The result is 0 records from the left side, if there is no match.
+	
+	SELECT column_name(s)
+	FROM table1
+	RIGHT JOIN table2
+	ON table1.column_name = table2.column_name;
+	
+	SELECT Customers.CustomerName, Orders.OrderID
+	FROM Customers
+	RIGHT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+	ORDER BY Customers.CustomerName;
+	
+	FULL OUTER JOIN Keyword
+	*************************
+	The FULL OUTER JOIN keyword returns all records when there is a match in left (table1) or right (table2) table records.
+
+	Tip: FULL OUTER JOIN and FULL JOIN are the same.
+
+	SELECT column_name(s)
+	FROM table1
+	FULL OUTER JOIN table2
+	ON table1.column_name = table2.column_name
+	WHERE condition;
+
+	Note: FULL OUTER JOIN can potentially return very large result-sets!
+	
+	SELECT Customers.CustomerName, Orders.OrderID
+	FROM Customers
+	FULL OUTER JOIN Orders ON Customers.CustomerID=Orders.CustomerID
+	ORDER BY Customers.CustomerName;
+	
+	Note: The FULL OUTER JOIN keyword returns all matching records from both tables whether the other table matches or not. So, if there are rows in "Customers" that do not have matches in "Orders", or if there are rows in "Orders" that do not have matches in "Customers", those rows will be listed as well.
+	
+	Self Join
+	***********
+	A self join is a regular join, but the table is joined with itself
+	
+	SELECT column_name(s)
+	FROM table1 T1, table1 T2
+	WHERE condition;
+	
+	Note : T1 and T2 are different table aliases for the same table.
+	
+	SELECT A.CustomerName AS CustomerName1, B.CustomerName AS CustomerName2, A.City
+	FROM Customers A, Customers B
+	WHERE A.CustomerID <> B.CustomerID
+	AND A.City = B.City
+	ORDER BY A.City;
+	
+	GROUP BY Statement
+	*******************
+	The GROUP BY statement groups rows that have the same values into summary rows, like "find the number of customers in each country".
+
+	The GROUP BY statement is often used with aggregate functions (COUNT(), MAX(), MIN(), SUM(), AVG()) to group the result-set by one or more columns.
+	
+	SELECT column_name(s)
+	FROM table_name
+	WHERE condition
+	GROUP BY column_name(s)
+	ORDER BY column_name(s);
+	
+	SELECT COUNT(CustomerID), Country FROM Customers GROUP BY Country;
+	SELECT COUNT(CustomerID), Country FROM Customers GROUP BY Country ORDER BY COUNT(CustomerID) DESC;
+	
+	GROUP BY With JOIN Example
+	SELECT Shippers.ShipperName, COUNT(Orders.OrderID) AS NumberOfOrders FROM Orders
+	LEFT JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID
+	GROUP BY ShipperName;
